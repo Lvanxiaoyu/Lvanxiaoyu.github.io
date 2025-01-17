@@ -6,12 +6,14 @@
     <title>mybutton</title>
 </head>
 <style>
+    /* 基础样式重置 */
     *{
         margin: 0;
         padding: 0;
         box-sizing: border-box;
         font-family: 'Poppins', sans-serif;
     }
+    /* 页面布局设置 - 使用flex实现居中布局 */
     body{
         display: flex;
         justify-content: center;
@@ -21,6 +23,7 @@
         gap: 50px;
         flex-direction: column;
     }
+    /* 按钮基础样式 */
     a{
         position: relative;
         padding: 20px 60px;
@@ -31,23 +34,25 @@
         text-decoration: none;
         transition: .5s;
         overflow: hidden;
-
     }
+    /* 按钮文字样式 */
     a span{
         position: relative;
-        z-index: 1;
+        z-index: 1;  /* 确保文字在最上层 */
         letter-spacing: .2em;
     }
+    /* 鼠标悬停时的文字发光效果 */
     a:hover{
         color: var(--clr);
         text-shadow: 0 0 15px var(--clr),
                      0 0 40px var(--clr);
     }
+    /* 创建鼠标跟随的光晕效果 */
     a::before{
         content: '';
         position: absolute;
-        top: var(--y);
-        left: var(--x);
+        top: var(--y);     /* 由JS动态设置的y坐标 */
+        left: var(--x);    /* 由JS动态设置的x坐标 */
         transform: translate(-50%,-50%);
         width: 200px;
         height: 200px;
@@ -55,9 +60,11 @@
         opacity: 0;
         transition: .5s, top 0s, left 0s;
     }
+    /* 鼠标悬停时显示光晕 */
     a:hover::before{
         opacity: 1;
     }
+    /* 按钮内层样式 */
     a::after{
         content: '';
         background-color: rgba(45, 45, 45, 1);
@@ -67,20 +74,23 @@
     }
 </style>
 <body>
+    <!-- 三个不同颜色的按钮 -->
     <a href="#" style="--clr:#0f0;"><span>BUTTON</span></a>
     <a href="#" style="--clr:#ff0;"><span>BUTTON</span></a>
     <a href="#" style="--clr:#f0f;"><span>BUTTON</span></a>
 
     <script>
+        // 获取所有按钮元素
         let btns = document.querySelectorAll('a')
+        // 为每个按钮添加鼠标移动事件监听
         btns.forEach(btn => {
             btn.onmousemove = (e) => {
+                // 计算鼠标相对按钮的位置
                 let x = e.pageX - btn.offsetLeft
                 let y = e.pageY - btn.offsetTop
-
+                // 设置CSS变量，用于光晕效果定位
                 btn.style.setProperty('--x',x + 'px')
                 btn.style.setProperty('--y',y + 'px')
-
             }
         })
     </script>
